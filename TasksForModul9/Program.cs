@@ -10,8 +10,8 @@ namespace TasksForModul9
     {
         static void Main(string[] args)
         {
-            Exception exception = new Exception();
-            exception.Data.Add("Дата создания исключения :", DateTime.Now);
+            Exception exception = new Exception("Непредвиденная ошибка");
+            exception.HelpLink = "https://chat.deepseek.com";
         }
 
 
