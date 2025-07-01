@@ -10,8 +10,20 @@ namespace TasksForModul9
     {
         static void Main(string[] args)
         {
-            Exception exception = new Exception("Непредвиденная ошибка");
-            exception.HelpLink = "https://chat.deepseek.com";
+            try
+            {
+                throw new ArgumentOutOfRangeException("Введенное значение выходит за границы допустимых");
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+               
+            }
+
+
         }
 
 
