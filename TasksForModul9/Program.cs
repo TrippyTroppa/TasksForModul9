@@ -12,11 +12,11 @@ namespace TasksForModul9
         {
             try
             {
-                throw new ArgumentOutOfRangeException("Введенное значение выходит за границы допустимых");
+                throw new RankException("Ошибка!!!!!!!!!!!!!!");
             }
-            catch(ArgumentOutOfRangeException ex)
+            catch (RankException ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.GetType());
             }
             finally
             {
