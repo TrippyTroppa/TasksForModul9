@@ -10,18 +10,25 @@ namespace TasksForModul9
 {
     internal class Program
     {
-        delegate int RandomNumberDelegate();
-        static void Main(string[] args)
-        {
-            RandomNumberDelegate randomNumberDelegate = () =>
-            {
-                return new Random().Next(0, 100);
-            };
-            int result = randomNumberDelegate.Invoke();
-            Console.WriteLine(result);
+        public delegate Car DoSomething();
 
+        public static Car CarSomething()
+        {
+            return null;
+        }
+        public static Lexus LexusSomething()
+        {
+            return null;
         }
 
+        static void Main(string[] args)
+        {
+            DoSomething doSomething = LexusSomething;
+
+
+        }
+        public class Car { }
+        public class Lexus : Car { }
 
 
 
