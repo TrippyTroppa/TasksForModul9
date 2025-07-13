@@ -15,18 +15,18 @@ namespace TasksForModul9
 
         static void Main(string[] args)
         {
-            ShowMessageDelegate showMessageDelegate = ShowMessage;
+            Action showMessageDelegate = ShowMessage;
             showMessageDelegate.Invoke();
 
-            SumDelegate sumDelegate = Sum;
+            Func<int, int, int, int> sumDelegate = Sum;
             int result = sumDelegate.Invoke(150, 30, 120);
             Console.WriteLine(result);
 
-            CheckLengthDelegate checkLengthDelegate = CheckLength;
-            bool status = checkLengthDelegate.Invoke("мнеодиноко");
+            Predicate<string> checkLengthDelegate = CheckLength;
+            bool status = checkLengthDelegate.Invoke("мненеодиноко");
             Console.WriteLine(status);
 
-            Console.ReadLine();
+            
         }
 
         static void ShowMessage()
