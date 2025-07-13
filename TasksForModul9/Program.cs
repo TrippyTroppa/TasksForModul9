@@ -14,7 +14,7 @@ namespace TasksForModul9
         {
             CalculateDelegate calculateDelegate = Calculate;
             calculateDelegate += Sum;
-
+            calculateDelegate -= Sum;
             calculateDelegate.Invoke(100, 55);
 
         }
