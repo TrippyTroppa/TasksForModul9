@@ -8,34 +8,43 @@ using System.Threading.Tasks;
 
 namespace TasksForModul9
 {
-    internal class Program
-    {
-        public delegate Car DoSomething();
+    using System;
 
-        public static Car CarSomething()
-        {
-            return null;
-        }
-        public static Lexus LexusSomething()
-        {
-            return null;
-        }
+    
+    class Parent { }
+    class Child : Parent { }
+
+    class Program
+    {
+        
+        delegate void MyDelegate(Child child);
 
         static void Main(string[] args)
         {
-            DoSomething doSomething = LexusSomething;
+            Console.WriteLine("Демонстрация контравариантности делегатов");
 
+           
+            void MethodWithParent(Parent parent)
+            {
+                Console.WriteLine("Метод MethodWithParent успешно вызван");
+            }
 
+           
+            MyDelegate del = MethodWithParent;
+
+            
+            del(new Child());
+
+            Console.WriteLine("Готово!");
         }
-        public class Car { }
-        public class Lexus : Car { }
-
-
-
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
 }
+
