@@ -16,7 +16,9 @@ namespace TasksForModul9
             int res = calcDel.Invoke(50, 2);
             Console.WriteLine(res);
 
-
+            CalculateDelegate calcDelegate = Calculate;
+            int res1 = calcDel(50, 5);
+            Console.WriteLine(res1);
 
         }
         
