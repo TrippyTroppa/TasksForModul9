@@ -9,22 +9,24 @@ namespace TasksForModul9
 {
     internal class Program
     {
-        delegate int CalculateDelegate(int a, int b);
+        delegate void CalculateDelegate(int a, int b);
         static void Main(string[] args)
         {
-            CalculateDelegate calcDel = Calculate;
-            int res = calcDel.Invoke(50, 2);
-            Console.WriteLine(res);
+            CalculateDelegate calculateDelegate = Calculate;
+            calculateDelegate += Sum;
 
-            CalculateDelegate calcDelegate = Calculate;
-            int res1 = calcDel(50, 5);
-            Console.WriteLine(res1);
+            calculateDelegate.Invoke(100, 55);
 
         }
         
-        static int Calculate (int a, int b)
+        static void Calculate (int a, int b)
         {
-            return a - b;
+            Console.WriteLine(a - b);
+        }
+
+        static void Sum(int a, int b)
+        {
+            Console.WriteLine(a + b);  
         }
 
 
