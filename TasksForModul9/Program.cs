@@ -9,24 +9,40 @@ namespace TasksForModul9
 {
     internal class Program
     {
-        delegate void CalculateDelegate(int a, int b);
+        delegate void ShowMessageDelegate();
+        delegate int SumDelegate(int a, int b, int c);
+        delegate bool CheckLengthDelegate(string row);
+
         static void Main(string[] args)
         {
-            CalculateDelegate calculateDelegate = Calculate;
-            calculateDelegate += Sum;
-            calculateDelegate -= Sum;
-            calculateDelegate.Invoke(100, 55);
+            ShowMessageDelegate showMessageDelegate = ShowMessage;
+            showMessageDelegate.Invoke();
 
-        }
-        
-        static void Calculate (int a, int b)
-        {
-            Console.WriteLine(a - b);
+            SumDelegate sumDelegate = Sum;
+            int result = sumDelegate.Invoke(150, 30, 120);
+            Console.WriteLine(result);
+
+            CheckLengthDelegate checkLengthDelegate = CheckLength;
+            bool status = checkLengthDelegate.Invoke("мнеодиноко");
+            Console.WriteLine(status);
+
+            Console.ReadLine();
         }
 
-        static void Sum(int a, int b)
+        static void ShowMessage()
         {
-            Console.WriteLine(a + b);  
+            Console.WriteLine("Я опаздываю");
+        }
+
+        static int Sum(int a, int b, int c)
+        {
+            return a - b + c;
+        }
+
+        static bool CheckLength(string _row)
+        {
+            if (_row.Length > 3) return true;
+            return false;
         }
 
 
