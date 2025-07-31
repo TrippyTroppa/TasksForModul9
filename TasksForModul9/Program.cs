@@ -8,43 +8,60 @@ using System.Threading.Tasks;
 
 namespace TasksForModul9
 {
-    using System;
-
-    
-    class Parent { }
-    class Child : Parent { }
+      public class MyCustomException : Exception
+    {
+        public MyCustomException() : base ("Это мое пользовательское исключение") { }
+        public MyCustomException(string message) : base(message) { }
+    }
 
     class Program
     {
-        
-        delegate void MyDelegate(Child child);
-
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Демонстрация контравариантности делегатов");
-
-           
-            void MethodWithParent(Parent parent)
-            {
-                Console.WriteLine("Метод MethodWithParent успешно вызван");
-            }
-
-           
-            MyDelegate del = MethodWithParent;
-
             
-            del(new Child());
+            var exceptions = new List<Exception>
+        {
+            new MyCustomException("Сработало MyCustomException!"),
+            new ArgumentNullException("Сработало ArgumentNullException!"),
+            new IndexOutOfRangeException("Сработало IndexOutOfRangeException!"),
+            new DivideByZeroException("Сработало DivideByZeroException!"),
+            new InvalidOperationException("Сработало InvalidOperationException!")
+        };
 
-            Console.WriteLine("Готово!");
+             
+            foreach (var ex in exceptions)
+            {
+                try
+                {
+                    // Искусственно выбрасываем текущее исключение
+                    throw ex;
+                }
+                catch (MyCustomException e)
+                {
+                    Console.WriteLine($"Поймано пользовательское исключение: {e.Message}");
+                }
+                catch (ArgumentNullException e)
+                {
+                    Console.WriteLine($"Поймано ArgumentNullException: {e.Message}");
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    Console.WriteLine($"Поймано IndexOutOfRangeException: {e.Message}");
+                }
+                catch (DivideByZeroException e)
+                {
+                    Console.WriteLine($"Поймано DivideByZeroException: {e.Message}");
+                }
+                catch (InvalidOperationException e)
+                {
+                    Console.WriteLine($"Поймано InvalidOperationException: {e.Message}");
+                }
+                finally
+                {
+                    Console.WriteLine("Блок finally выполнен.\n");
+                }
+            }
         }
     }
-
-
-
-
-
-
-
-
 }
 
