@@ -8,60 +8,87 @@ using System.Threading.Tasks;
 
 namespace TasksForModul9
 {
-      public class MyCustomException : Exception
+      public class InvalidChoiceException : Exception
     {
-        public MyCustomException() : base ("Это мое пользовательское исключение") { }
-        public MyCustomException(string message) : base(message) { }
+        public InvalidChoiceException() : base("Введено некорректное значение!") { }
+        public InvalidChoiceException(string message) : base(message) { }
+    }
+
+    public class Sorter
+    {
+        public delegate void SortEventHandler(List<string> list, int direction);
+        public event SortEventHandler OnSortRequest;
+
+        public void SortRequest(List<string> list, int direction)
+        {
+            OnSortRequest?.Invoke(list, direction);
+        }
+
     }
 
     class Program
     {
         static void Main()
         {
-            
-            var exceptions = new List<Exception>
-        {
-            new MyCustomException("Сработало MyCustomException!"),
-            new ArgumentNullException("Сработало ArgumentNullException!"),
-            new IndexOutOfRangeException("Сработало IndexOutOfRangeException!"),
-            new DivideByZeroException("Сработало DivideByZeroException!"),
-            new InvalidOperationException("Сработало InvalidOperationException!")
-        };
 
-             
-            foreach (var ex in exceptions)
+            var surnames = new List<string>()
             {
-                try
+                "Иванов",
+                "Петров",
+                "Абвгдеев",
+                "Бекетов",
+                "Яйков"
+
+            };
+
+            Console.WriteLine("Исходный список фамилий:");
+            surnames.ForEach(Console.WriteLine);
+
+
+            var sorter = new Sorter();
+            sorter.OnSortRequest += SortList;
+
+            Console.WriteLine("\nВведите 1 для сортировки А-Я или 2 для сортировки Я-А:");
+
+            try
+            {
+                int input = Convert.ToInt32(Console.ReadLine());
+                if (input != 1 && input != 2)
                 {
-                    // Искусственно выбрасываем текущее исключение
-                    throw ex;
+                    throw new InvalidChoiceException("Допустим ввод только 1 или 2!");
                 }
-                catch (MyCustomException e)
-                {
-                    Console.WriteLine($"Поймано пользовательское исключение: {e.Message}");
-                }
-                catch (ArgumentNullException e)
-                {
-                    Console.WriteLine($"Поймано ArgumentNullException: {e.Message}");
-                }
-                catch (IndexOutOfRangeException e)
-                {
-                    Console.WriteLine($"Поймано IndexOutOfRangeException: {e.Message}");
-                }
-                catch (DivideByZeroException e)
-                {
-                    Console.WriteLine($"Поймано DivideByZeroException: {e.Message}");
-                }
-                catch (InvalidOperationException e)
-                {
-                    Console.WriteLine($"Поймано InvalidOperationException: {e.Message}");
-                }
-                finally
-                {
-                    Console.WriteLine("Блок finally выполнен.\n");
-                }
+
+                sorter.SortRequest(surnames, input);
+                Console.WriteLine("\nОтсортированный список фамилий:");
+                surnames.ForEach(Console.WriteLine);
+            }
+            catch (InvalidChoiceException ex)
+            {
+                Console.WriteLine($"Ошибка ввода! {ex.Message}");
+            }
+            finally
+            {
+                Console.WriteLine("Программа успешно выполнена!");
             }
         }
+
+        private static void SortList(List<string> list, int direction)
+        {
+            switch (direction)
+            {
+                case 1:
+                    list.Sort();
+                    break;
+                case 2:
+                    list.Sort((a, b) => b.CompareTo(a));
+                    break;
+                default:
+                    throw new InvalidChoiceException("Неверное направление сортировки");
+            }
+        } 
+    
+    
     }
+    
 }
 
